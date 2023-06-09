@@ -1,0 +1,19 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 58px;
+}
+
+.input label {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  padding-bottom: 21px;
+}
+
+.input input {
+  border: 1px solid #bdbdbd;
+  border-radius: 10px;
+  height: 57px;
+  padding: 0 24px;
+}

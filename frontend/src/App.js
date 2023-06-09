@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './stylesheets/App.css';
-import FormView from './components/FormView';
-import QuestionView from './components/QuestionView';
-import Header from './components/Header';
-import QuizView from './components/QuizView';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Login } from "./pages/Login/Login";
+import "./index.css";
+import { Inbox } from "./pages/Inbox/Inbox";
+import { Settings } from "./pages/Settings/Settings";
+import { Send } from "./pages/Send/Send";
 
 class App extends Component {
   render() {
     return (
       <div className='App'>
-        <Header path />
         <Router>
           <Switch>
-            <Route path='/' exact component={QuestionView} />
+            <Route path='/login' exact component={Login} />
+            <Route path='/' exact component={Inbox} />
+            <Route path='/settings' exact component={Settings} />
+            <Route path='/send' exact component={Send} />
+            {/* <Route path='/' exact component={QuestionView} />
             <Route path='/add' component={FormView} />
             <Route path='/play' component={QuizView} />
-            <Route component={QuestionView} />
+            <Route component={QuestionView} /> */}
           </Switch>
         </Router>
       </div>
