@@ -46,6 +46,10 @@ def send_email():
         return 'Email sent successfully!'
     except Exception as e:
         return f'An error occurred: {str(e)}'
+
+# @app.route('/retrieve_email', methods=['POST']) 
+# def retrieve_email():
+    #should be able to display specified amount of recent emails
     
     # Get form data
     
