@@ -1,0 +1,32 @@
+.divider {
+  background-color: #e0e0e0;
+  width: 1px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 400px;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.secondHalf {
+  width: 70%;
+  border-left: 1px solid #e0e0e0;
+  height: 100vh;
+}
+
+.firstHalf {
+  width: 30%;
+  padding-top: 82px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 44px;
+  margin-bottom: 44px;
+}

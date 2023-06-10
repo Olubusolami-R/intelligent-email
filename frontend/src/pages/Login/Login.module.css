@@ -1,0 +1,43 @@
+.left {
+  background-color: #f1eaeb;
+  height: 100vh;
+  width: 40%;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.left__bubble {
+  padding-top: 55px;
+  padding-left: 55px;
+}
+
+.right {
+  margin-left: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 180px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 76px;
+  left: 55px;
+  font-size: 40px;
+  line-height: 49px;
+  font-weight: 700;
+  width: 262px;
+}
+
+.header {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 49px;
+  width: 359px;
+}
+
+.form {
+  margin-top: 56px;
+}
