@@ -8,8 +8,7 @@
 }
 
 .right {
-  margin-left: calc(269px + 42px);
-  /* margin-top: 82px; */
+  margin-left: 269px;
 }
 
 .header {

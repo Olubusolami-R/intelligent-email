@@ -16,6 +16,10 @@
   user-select: none;
 }
 
+.wrapper {
+  padding-left: 42px;
+}
+
 /* Hide the browser's default radio button */
 .container input {
   position: absolute;

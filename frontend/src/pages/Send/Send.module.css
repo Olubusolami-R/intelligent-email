@@ -30,3 +30,14 @@
   line-height: 44px;
   margin-bottom: 44px;
 }
+.header {
+  padding-left: 42px;
+}
+
+.emailContainer {
+  margin-top: 42px;
+  margin-bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}

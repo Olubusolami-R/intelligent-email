@@ -1,0 +1,45 @@
+.container {
+  padding-left: 43px;
+  margin-top: 72px;
+  padding-right: 76px;
+}
+
+.content {
+  max-width: 651px;
+  padding-top: 30px;
+
+  color: #4f4f4f;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.sender {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 36px;
+}
+
+.dateTime {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #bdbdbd;
+}
+
+.to {
+  color: #bdbdbd;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}

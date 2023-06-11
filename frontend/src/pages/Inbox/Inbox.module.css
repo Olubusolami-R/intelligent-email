@@ -1,27 +1,22 @@
-.divider {
-  background-color: #e0e0e0;
-  width: 1px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 400px;
-}
-
 .container {
   display: flex;
   width: 100%;
   justify-content: space-between;
 }
 
+.header {
+  padding-left: 42px;
+}
+
 .secondHalf {
   width: 70%;
   border-left: 1px solid #e0e0e0;
-  height: 100vh;
 }
 
 .firstHalf {
   width: 30%;
   padding-top: 82px;
+  overflow-y: scroll;
 }
 
 .title {
@@ -29,4 +24,12 @@
   font-size: 36px;
   line-height: 44px;
   margin-bottom: 44px;
+}
+
+.emailContainer {
+  margin-top: 42px;
+  margin-bottom: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
 }

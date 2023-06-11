@@ -1,0 +1,37 @@
+.container {
+  padding-left: 42px;
+  padding-right: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.sender {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.subject {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.preview {
+  color: #bdbdbd;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.autoReply {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #0400be;
+}
