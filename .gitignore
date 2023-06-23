@@ -1,6 +1,5 @@
 venv
 details.py
 __pycache__
-.cache/babel-loader
-
 /node_modules
+migrations

@@ -22,6 +22,10 @@
   line-height: 19px;
 }
 
+.unreadSubject {
+  color:#0400be; /* Set the desired color for unread subjects */
+}
+
 .preview {
   color: #bdbdbd;
   font-weight: 500;
