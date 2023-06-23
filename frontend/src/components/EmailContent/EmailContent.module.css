@@ -1,13 +1,11 @@
 .container {
   padding-left: 43px;
+  padding-right: 43px;
   margin-top: 72px;
-  padding-right: 76px;
 }
 
 .content {
-  max-width: 651px;
   padding-top: 30px;
-
   color: #4f4f4f;
   font-weight: 400;
   font-size: 20px;
@@ -42,4 +40,15 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
+}
+
+.content p:not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.buttons {
+  margin-top: 67px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
 }

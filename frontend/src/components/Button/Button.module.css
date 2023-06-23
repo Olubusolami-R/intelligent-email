@@ -1,9 +1,10 @@
 .button {
-  background: #1e1e1e;
   border-radius: 20px;
   border: none;
   cursor: pointer;
-  color: white;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .largeButton {
@@ -15,4 +16,22 @@
 
 .smallButton {
   padding: 15px 36px;
+}
+
+.filled {
+  background: #1e1e1e;
+  color: white;
+}
+
+.border {
+  font-weight: 400;
+  border: 1px solid #000;
+  color: black;
+  background-color: white;
+  padding: 15px 30px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
 }
