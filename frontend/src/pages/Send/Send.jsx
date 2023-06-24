@@ -17,6 +17,11 @@ const mockEmails = [
     isAutoReply: true,
     unread: false,
     dateTime: "24th June, 2023",
+    content: [
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+    ],
   },
   {
     senderName: "Omowunmi Sogunle",
@@ -26,6 +31,21 @@ const mockEmails = [
     isAutoReply: false,
     unread: true,
     dateTime: "21st June, 2023",
+    content: [
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+    ],
+
+    reply: {
+      senderName: "Busola Sogunle",
+      dateTime: "23rd June, 2023",
+      isAutoReply: true,
+      to: "Omowunmi Sogunle",
+      content: [
+        "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      ],
+    },
   },
   {
     senderName: "TestName Sogunle",
@@ -35,6 +55,13 @@ const mockEmails = [
     isAutoReply: true,
     unread: false,
     dateTime: "20th June, 2023",
+    content: [
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+    ],
+
+    reply: null,
   },
   {
     senderName: "Rose Mary",
@@ -44,6 +71,13 @@ const mockEmails = [
     isAutoReply: true,
     unread: false,
     dateTime: "11th June, 2023",
+    content: [
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+      "Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit ametEmail snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.",
+    ],
+
+    reply: null,
   },
 ];
 
