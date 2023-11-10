@@ -19,8 +19,8 @@ import email
 
 # @celery.task
 def poll_inbox():
-    username = "busoladev@outlook.com"
-    password = "Olurose3020"
+    username = "*******"
+    password = "*******"
     imap_server = "outlook.office365.com"
 
     try:
