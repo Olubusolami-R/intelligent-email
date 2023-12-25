@@ -1,5 +1,5 @@
 venv
-details.py
 __pycache__
 /node_modules
 migrations
+/backend/details2.py

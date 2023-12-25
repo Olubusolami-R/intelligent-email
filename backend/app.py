@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
-import smtplib, os
-from details import login_details
-from models import db, User, Email, Recipient, EmailThread
+from flask import Flask, request
+import smtplib
+from details2 import login_details
+from models import db, User, Email, Recipient, EmailThread, setup_db
 from flask_moment import Moment
 from flask_migrate import Migrate
 from flask import Flask, request, jsonify
@@ -11,19 +11,17 @@ import email
 from sqlalchemy import desc
 from celery import Celery
 from email.mime.text import MIMEText
-from datetime import timedelta
 import celeryconfig
 
-database_name = 'autoresponse'
-database_path = 'postgresql://{}/{}'.format('localhost:5432', database_name)
-
+#Set up flask app
 app = Flask(__name__)
 app.config.from_object('config')
 app.app_context().push()
-db.init_app(app)
+setup_db(app)
+
+#Initialize extensions
 moment = Moment(app)
 migrate=Migrate(app,db)
-
 
 x=login_details()
 usern=x[0]
