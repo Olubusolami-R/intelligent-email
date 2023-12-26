@@ -20,6 +20,7 @@ class User(db.Model):
     email=Column(String)
     password=Column(String)
     preference=Column (String)
+    threads = db.relationship('EmailThread', backref='user', lazy=True)
 
     def __init__(self, email, password, preference):
         self.email = email
@@ -92,7 +93,7 @@ class Email(db.Model):
             'isAutoReply': False,
             'unread': self.unread,
             'dateTime': self.date,
-            'content':self.content,
+            'content':self.preview,
             'to': recipients,
             'id':self.id
         }
@@ -104,6 +105,7 @@ class Recipient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email_id = db.Column(db.Integer, db.ForeignKey('emails.id'))
     recipient = db.Column(db.String(255))
+
     def __init__(self, email_id, recipient):
         self.email_id = email_id
         self.recipient= recipient
@@ -130,8 +132,12 @@ class EmailThread(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     emails = db.relationship('Email', backref='thread', lazy=True)
-    def __init__(self, emails=None):
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def __init__(self,user_id, emails=None):
+        self.user_id = user_id
         self.emails = emails or []
+        
     def insert(self):
         db.session.add(self)
         db.session.commit()

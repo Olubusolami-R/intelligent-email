@@ -47,7 +47,7 @@ def make_celery(app):
 celery = make_celery(app)
 
 #Retrieve emails from outlook server
-def retrieve_email(): 
+def retrieve_email(username,password): 
     # select a mailbox
     imap_server = "outlook.office365.com"
     imap = imaplib.IMAP4_SSL(imap_server)
@@ -116,16 +116,23 @@ def home():
 #Create new user in the database
 @app.route('/new_user', methods=['POST'])
 def create_user():
-    print(request)
-    if request.is_json:
-        data=request.get_json()
-        print(data)
-        user=User(email=data['email'], password=data['password'], preference=data['preference'])
-        db.session.add(user)
-        db.session.commit()
-        return {"message": f"User {user.email} has been created successfully."}
-    else:
-        return {"error": "The request payload is not in JSON format"}
+    try:
+        if request.is_json:
+            data=request.get_json()
+
+            user=User(email=data['email'], password=data['password'], preference=data['preference'])
+            user.insert()
+
+            initial_thread = EmailThread(user_id=user.id)
+            initial_thread.insert()
+
+            return {"message": f"User {user.email} has been created successfully."}
+        
+        else:
+            return {"error": "The request payload is not in JSON format"}
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 #Login to email client
 @app.route('/login', methods=['POST'])
@@ -133,24 +140,27 @@ def login():
     data=request.get_json()
     email=data['email']
     pword=data['password']
-    old_user = User.query.filter_by(email=email).first()
-    print(old_user)
+    user = User.query.filter_by(email=email).first()
+    
     try:
-        if old_user.password ==pword:
+        if user and user.password ==pword:
             print("Correct password")
-            return jsonify({'message': 'Login successful'}), 200
+            return jsonify({'message': 'Login successful','user_id':user.id}), 200
         else:
             return jsonify({'message': 'Invalid credentials'}), 401
+        
     except Exception as e:
         return jsonify({'message': 'Bad Request'}), 400
 
 
 #Called once to populate the database from outlook server  
-@app.route('/populate')
-def populate_db():
+@app.route('/populate/<int:user_id>')
+def populate_db(user_id):
     try:
-        # Retrieve and populate emails in the database
-        emails = retrieve_email()
+        user = User.query.filter_by(id=user_id).first()
+        username=user.email
+        password=user.password
+        emails = retrieve_email(username,password)
         print(emails[0])
 
         for email in emails:
@@ -163,9 +173,9 @@ def populate_db():
             tid = email['tid']
 
             # Check if the thread exists or create a new one
-            thread = EmailThread.query.filter_by(id=tid).first()
+            thread = EmailThread.query.filter_by(user_id=user_id,id=tid).first()
             if not thread:
-                thread = EmailThread(emails=[])
+                thread = EmailThread(user_id=user_id, emails=[])
                 db.session.add(thread)
                 db.session.flush()
 
@@ -174,6 +184,7 @@ def populate_db():
             db.session.flush()
 
             recipients = []
+
             for recipient_data in recipients_data:
                 recipient = Recipient(email_id=new_email.id, recipient=recipient_data)
                 recipients.append(recipient)
@@ -181,7 +192,7 @@ def populate_db():
             new_email.recipients = recipients
             db.session.commit()
 
-        # Return a success response
+        # # Return a success response
         return jsonify({'message': 'Emails successfully populated in the database.'}), 200
 
     except Exception as e:
@@ -189,10 +200,11 @@ def populate_db():
         return jsonify({'error': str(e)}), 500
 
 #Retrieve inbox from database
-@app.route('/retrieve_inbox', methods=['GET'])
-def retrieve_inbox():
+@app.route('/retrieve_inbox/<int:user_id>', methods=['GET'])
+def retrieve_inbox(user_id):
+    print(user_id)
     try:
-        emails = Email.query.order_by(desc(Email.date)).all()
+        emails = Email.query.filter(Email.thread.has(user_id=user_id)).order_by(desc(Email.date)).all()
         formatted_emails = [email.format() for email in emails]
         print(formatted_emails[0])
         return jsonify(formatted_emails)
@@ -200,16 +212,20 @@ def retrieve_inbox():
         return jsonify({'error': str(e)}), 500
 
 #Mark email message as read once opened
-@app.route('/update_email/<int:email_id>', methods=['POST'])
-def update_email(email_id):
+@app.route('/update_email/<int:user_id>/<int:email_id>', methods=['POST'])
+def update_email(user_id, email_id):
     email_message=Email.query.get(email_id)
+    email_message = Email.query.join(Email.thread).filter(Email.id == email_id, EmailThread.user_id == user_id).first()
+
     try:
-        email_message.unread=False
-        db.session.add(email_message)
-        db.session.commit()
-        return jsonify({'message': 'Unread is now marked False'}), 200
+        if email_message:
+            email_message.unread=False
+            db.session.add(email_message)
+            db.session.commit()
+            return jsonify({'message': 'Unread is now marked False'}), 200
+        else:
+            return jsonify({'error': 'Email not found or does not belong to the user'}), 404
     except Exception as e:
-        # Return an error response
         return jsonify({'error': str(e)}), 500
 
 
