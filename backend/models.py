@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, create_engine
+from sqlalchemy import Column, String, Integer
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -43,7 +43,6 @@ class User(db.Model):
             'response method': self.preference
             }
 
-
 class Email(db.Model):
     __tablename__ = 'emails'
 
@@ -58,7 +57,6 @@ class Email(db.Model):
     preview = db.Column(db.String(255))
     unread = db.Column(db.Boolean, default=True)
     
-
     def __init__(self,server_id, subject, content, sender, date, thread_id,  recipients=None, unread=True):
         self.server_id =server_id
         self.subject=subject
@@ -74,7 +72,6 @@ class Email(db.Model):
         else:
             self.preview=content_list[1]
         
-
     def insert(self):
         db.session.add(self)
         db.session.commit()
@@ -133,8 +130,6 @@ class EmailThread(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     emails = db.relationship('Email', backref='thread', lazy=True)
-    # def __init__(self, emails):
-    #     self.emails = emails
     def __init__(self, emails=None):
         self.emails = emails or []
     def insert(self):

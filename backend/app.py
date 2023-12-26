@@ -1,6 +1,5 @@
 from flask import Flask, request
-import smtplib
-from details2 import login_details
+import smtplib,os
 from models import db, User, Email, Recipient, EmailThread, setup_db
 from flask_moment import Moment
 from flask_migrate import Migrate
@@ -13,7 +12,7 @@ from celery import Celery
 from email.mime.text import MIMEText
 import celeryconfig
 
-#Set up flask app
+#Set up Flask app
 app = Flask(__name__)
 app.config.from_object('config')
 app.app_context().push()
@@ -23,11 +22,11 @@ setup_db(app)
 moment = Moment(app)
 migrate=Migrate(app,db)
 
-x=login_details()
-usern=x[0]
-pword=x[1]
-#celery
+#Get outlook login details from environment variables
+username=os.environ.get('USERNAME')
+password=os.environ.get('PASSWORD')
 
+#Define and initialize celery
 def make_celery(app):
     celery = Celery(
         app.import_name,
@@ -45,16 +44,11 @@ def make_celery(app):
     celery.Task = ContextTask
     return celery
 
-
 celery = make_celery(app)
 
-
-def retrieve_email():
-    
+#Retrieve emails from outlook server
+def retrieve_email(): 
     # select a mailbox
-    username=usern
-    password=pword
-
     imap_server = "outlook.office365.com"
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, password)
@@ -92,14 +86,13 @@ def retrieve_email():
     print(emails)
     return emails
 
-
-
+#Auto-response handler function
 def send_auto_response(recipient, subject, message):
     # Configure the SMTP server
     smtp_host = "smtp.office365.com"
     smtp_port = 587
-    smtp_username = usern
-    smtp_password = pword
+    smtp_username = username
+    smtp_password = password
 
     # Create the email message
     msg = MIMEText(message)
@@ -115,10 +108,12 @@ def send_auto_response(recipient, subject, message):
 
     return "Auto-response sent!"
 
+
 @app.route('/')
 def home():
     return 'baby steps'
 
+#Create new user in the database
 @app.route('/new_user', methods=['POST'])
 def create_user():
     print(request)
@@ -131,16 +126,13 @@ def create_user():
         return {"message": f"User {user.email} has been created successfully."}
     else:
         return {"error": "The request payload is not in JSON format"}
-    
+
+#Login to email client
 @app.route('/login', methods=['POST'])
 def login():
-    print(request)
     data=request.get_json()
-    print(data)
     email=data['email']
     pword=data['password']
-    print(email)
-    print(pword)
     old_user = User.query.filter_by(email=email).first()
     print(old_user)
     try:
@@ -151,12 +143,11 @@ def login():
             return jsonify({'message': 'Invalid credentials'}), 401
     except Exception as e:
         return jsonify({'message': 'Bad Request'}), 400
-        # return f'An error occurred: {str(e)}'
 
 
-#called once to populate the db       
+#Called once to populate the database from outlook server  
 @app.route('/populate')
-def populate():
+def populate_db():
     try:
         # Retrieve and populate emails in the database
         emails = retrieve_email()
@@ -197,18 +188,18 @@ def populate():
         # Return an error response
         return jsonify({'error': str(e)}), 500
 
-
+#Retrieve inbox from database
 @app.route('/retrieve_inbox', methods=['GET'])
 def retrieve_inbox():
+    try:
+        emails = Email.query.order_by(desc(Email.date)).all()
+        formatted_emails = [email.format() for email in emails]
+        print(formatted_emails[0])
+        return jsonify(formatted_emails)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    # x=poll_inbox.delay()
-    # print(x.get())
-
-    emails = Email.query.order_by(desc(Email.date)).all()
-    formatted_emails = [email.format() for email in emails]
-    print(formatted_emails[0])
-    return jsonify(formatted_emails)
-
+#Mark email message as read once opened
 @app.route('/update_email/<int:email_id>', methods=['POST'])
 def update_email(email_id):
     email_message=Email.query.get(email_id)
@@ -220,6 +211,7 @@ def update_email(email_id):
     except Exception as e:
         # Return an error response
         return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():
