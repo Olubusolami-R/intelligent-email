@@ -16,10 +16,6 @@ class App extends Component {
             <Route path='/' exact component={Inbox} />
             <Route path='/settings' exact component={Settings} />
             <Route path='/send' exact component={Send} />
-            {/* <Route path='/' exact component={QuestionView} />
-            <Route path='/add' component={FormView} />
-            <Route path='/play' component={QuizView} />
-            <Route component={QuestionView} /> */}
           </Switch>
         </Router>
       </div>

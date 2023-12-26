@@ -38,8 +38,7 @@ export const DashboardLayout = ({ children, title }) => {
     <div>
       <div className={classes.left}>
         <div className={classes.header}>
-          <h1>Busolami Sogunle</h1>
-          <h2>youremail@outlook.com</h2>
+          <h1>Hello and welcome!</h1>
         </div>
         <nav>
           {navItems.map((item) => (

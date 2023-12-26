@@ -40,6 +40,8 @@ export const Login = () => {
         // Handle the response from the backend
         if (data.message === "Login successful") {
           // Redirect to the desired page on successful login
+          localStorage.setItem('user_id', data.user_id);
+          console.log(localStorage.getItem('user_id'))
           history.push("/");
         } else {
           // Handle failed login attempt

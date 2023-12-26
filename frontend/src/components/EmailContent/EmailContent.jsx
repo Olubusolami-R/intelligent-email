@@ -5,6 +5,19 @@ import { EmailReply, EmailTextArea } from "../EmailReply/EmailReply";
 
 export const EmailContent = ({ email }) => {
   const [showReply, setShowReply] = useState(false);
+  console.log(email, email.content, 'email content')
+
+  if (!email.content) {
+    // Handle the case where email content is not an array
+    return (
+      <div className={classes.container}>
+        <div className={classes.header}>
+          <div className={classes.subject}>Error: Invalid email content format</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.container}>
       <div className={classes.header}>
@@ -19,15 +32,7 @@ export const EmailContent = ({ email }) => {
         </div>
       </div>
 
-      <div className={classes.content}>
-        {email.content.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
-        {/* {email.content} */}
-        {/* Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-        Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-        Email snippet lorem ipsum dolor sit amet lorem ipsum dolor sit amet */}
-      </div>
+      <div className={classes.content} dangerouslySetInnerHTML={{ __html: email.content }}/>
       <div className={classes.buttons}>
         <Button
           icon='reply'

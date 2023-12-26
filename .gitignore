@@ -2,4 +2,4 @@ venv
 __pycache__
 /node_modules
 migrations
-/backend/details2.py
+.env
