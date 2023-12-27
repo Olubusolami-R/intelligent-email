@@ -8,9 +8,7 @@ from flask_migrate import Migrate
 from sqlalchemy import desc
 
 from models import db, User, Email, Recipient, EmailThread, setup_db
-from details import get_details
 import celeryconfig
-import smtplib
 
 #Set up Flask app
 app = Flask(__name__)
