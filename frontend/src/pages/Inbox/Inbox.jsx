@@ -73,7 +73,6 @@ export const Inbox = () => {
                       key={email.id}
                       onClick={() => 
                         {
-                         
                           setExpandedEmail(email);
                           markEmailAsRead(email.id); // Call the function to mark email as read
                         }

@@ -14,11 +14,11 @@ const navItems = [
     path: "/",
     counter: 0,
   },
-  {
-    name: "Send",
-    icon: <SendIcon />,
-    path: "/send",
-  },
+  // {
+  //   name: "Send",
+  //   icon: <SendIcon />,
+  //   path: "/send",
+  // },
   {
     name: "Settings",
     icon: <SettingsIcon />,

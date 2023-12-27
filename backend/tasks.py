@@ -37,10 +37,11 @@ def poll_inbox():
     # Connect to the email server
     username=get_details()[0]
     password=get_details()[1]
-    print("hiii")
     print(username,password)
+
     user=User.query.filter_by(email=username.lower()).first()
     user_id=user.id
+    user_preference = user.preference
     imap_server = "outlook.office365.com"
     imap = imaplib.IMAP4_SSL(imap_server)
     imap.login(username, password)
@@ -85,9 +86,6 @@ def poll_inbox():
                 print(m)
                 #try adding the new email to the database
                 try:
-                    # email_obj = Email(sender=sender, subject=subject, content=content)
-                    # db.session.add(email_obj)
-                    # db.session.commit()
                     thread = EmailThread.query.filter_by(id=m['tid']).first()
                     if not thread:
                         thread = EmailThread(user_id=user_id,emails=[])
@@ -107,21 +105,22 @@ def poll_inbox():
                     db.session.commit()
 
                     #Send auto-response (GPT model is to be called here)
-                    auto_response = "Thank you for your email!"
-                    send_auto_response(m['sender'], m['subject'], auto_response)
+                    if user_preference == "enabled":
+                        auto_response = "By auto-responder: Thank you for your email!"
+                        send_auto_response(m['sender'], m['subject'], auto_response)
 
-                    # Add the auto-response to the database
-                    new_reply = Email(
-                        server_id=0,
-                        subject=f"Re: {m['subject']}",
-                        content=auto_response,
-                        sender=get_details()[0],
-                        date=m['date'],
-                        thread_id=thread.id,
-                        unread=True
-                    )
-                    db.session.add(new_reply)
-                    db.session.commit()
+                        # Add the auto-response to the database
+                        new_reply = Email(
+                            server_id=0,
+                            subject=f"Re: {m['subject']}",
+                            content=auto_response,
+                            sender=get_details()[0],
+                            date=m['date'],
+                            thread_id=thread.id,
+                            unread=True
+                        )
+                        db.session.add(new_reply)
+                        db.session.commit()
                             
                 except Exception as e:
                     # Return an error response
@@ -129,10 +128,5 @@ def poll_inbox():
 
 
                 emails.append(m)
-                # # Send an auto-response
-                # if emails!=[]:
-                #     for x in emails:
-                #         #gpt model meant to be called here
-                        
-                        
+                                                
     logger.info(emails)

@@ -33,16 +33,7 @@ export const EmailContent = ({ email }) => {
       </div>
 
       <div className={classes.content} dangerouslySetInnerHTML={{ __html: email.content }}/>
-      <div className={classes.buttons}>
-        <Button
-          icon='reply'
-          type='border'
-          text='Reply'
-          size='smallButton'
-          onClick={() => setShowReply(true)}
-        />
-        <Button icon='ai' type='border' text='AI Reply' size='smallButton' />
-      </div>
+      
 
       {email.reply ? <EmailReply email={email.reply} /> : null}
       {showReply && <EmailTextArea onCancel={() => setShowReply(!showReply)} />}

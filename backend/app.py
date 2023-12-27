@@ -224,7 +224,46 @@ def update_email(user_id, email_id):
             return jsonify({'error': 'Email not found or does not belong to the user'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+#Get user auto-response preference
+@app.route('/get_user_preference/<int:user_id>', methods=['GET'])
+def get_user_preference(user_id):
+    try:
+        user = User.query.get(user_id)
+        if user:
+            return jsonify({'preference': user.preference})
+        else:
+            return jsonify({'error': 'User not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+#Set user auto-response preference
+@app.route('/update_user_preference/<int:user_id>', methods=['POST'])
+def update_user_preference(user_id):
+    try:
+        user = User.query.get(user_id)
 
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        data = request.get_json()
+
+        if 'preference' not in data:
+            return jsonify({'error': 'Missing preference in the request body'}), 400
+
+        new_preference = data['preference']
+
+        # Assuming your User model has a valid set of preferences
+        if new_preference not in ["enabled", "disabled"]:
+            return jsonify({'error': 'Invalid preference value'}), 400
+
+        user.preference = new_preference
+        db.session.commit()
+
+        return jsonify({'message': 'User preference updated successfully'}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     with app.app_context():
