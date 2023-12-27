@@ -1,17 +1,16 @@
-from flask import Flask, request
-import smtplib,os
-from models import db, User, Email, Recipient, EmailThread, setup_db
-from flask_moment import Moment
-from flask_migrate import Migrate
-from flask import Flask, request, jsonify
-import imaplib
-from email.parser import HeaderParser
 import email
-from sqlalchemy import desc
-from celery import Celery
+import imaplib
 from email.mime.text import MIMEText
-import celeryconfig
+
+from celery import Celery
+from flask import Flask, request, jsonify
+from flask_migrate import Migrate
+from sqlalchemy import desc
+
+from models import db, User, Email, Recipient, EmailThread, setup_db
 from details import get_details
+import celeryconfig
+import smtplib
 
 #Set up Flask app
 app = Flask(__name__)
@@ -20,7 +19,6 @@ app.app_context().push()
 setup_db(app)
 
 #Initialize extensions
-moment = Moment(app)
 migrate=Migrate(app,db)
 
 #Define and initialize celery
@@ -32,7 +30,6 @@ def make_celery(app):
     )
     celery.conf.update(app.config)
     celery.config_from_object(celeryconfig)
-    # celery.task()(add_together)
     class ContextTask(celery.Task):
         def __call__(self, *args, **kwargs):
             with app.app_context():
@@ -43,7 +40,7 @@ def make_celery(app):
 
 celery = make_celery(app)
 
-#Retrieve emails from outlook server
+#Function to Retrieve emails from outlook server
 def retrieve_email(username,password): 
     # select a mailbox
     imap_server = "outlook.office365.com"
@@ -83,31 +80,12 @@ def retrieve_email(username,password):
     print(emails)
     return emails
 
-#Auto-response handler function
-def send_auto_response(recipient, subject, message):
-    # Configure the SMTP server
-    smtp_host = "smtp.office365.com"
-    smtp_port = 587
-    smtp_username = get_details()[0]
-    smtp_password = get_details()[1]
-    # Create the email message
-    msg = MIMEText(message)
-    msg['Subject'] = f"Re: {subject}"
-    msg['From'] = smtp_username
-    msg['To'] = recipient
 
-    # Send the email
-    with smtplib.SMTP(smtp_host, smtp_port) as server:
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        server.send_message(msg)
-
-    return "Auto-response sent!"
-
-
+# Flask routes to be used on the frontend
 @app.route('/')
 def home():
-    return 'baby steps'
+    return 'Default route'
+
 
 #Create new user in the database
 @app.route('/new_user', methods=['POST'])
@@ -130,6 +108,7 @@ def create_user():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+
 #Login to email client
 @app.route('/login', methods=['POST'])
 def login():
@@ -148,6 +127,7 @@ def login():
         
     except Exception as e:
         return jsonify({'message': 'Bad Request'}), 400
+
 
 
 #Called once to populate the database from outlook server  
@@ -176,7 +156,14 @@ def populate_db(user_id):
                 db.session.add(thread)
                 db.session.flush()
 
-            new_email = Email(server_id=sid, subject=subject, content=content, sender=sender, date=date, thread_id=thread.id)
+            new_email = Email(
+                server_id=sid, 
+                subject=subject, 
+                content=content, 
+                sender=sender, 
+                date=date, 
+                thread_id=thread.id
+                )
             db.session.add(new_email)
             db.session.flush()
 
@@ -196,6 +183,7 @@ def populate_db(user_id):
         # Return an error response
         return jsonify({'error': str(e)}), 500
 
+
 #Retrieve inbox from database
 @app.route('/retrieve_inbox/<int:user_id>', methods=['GET'])
 def retrieve_inbox(user_id):
@@ -207,6 +195,7 @@ def retrieve_inbox(user_id):
         return jsonify(formatted_emails)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 #Mark email message as read once opened
 @app.route('/update_email/<int:user_id>/<int:email_id>', methods=['POST'])
@@ -224,6 +213,7 @@ def update_email(user_id, email_id):
             return jsonify({'error': 'Email not found or does not belong to the user'}), 404
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+   
     
 #Get user auto-response preference
 @app.route('/get_user_preference/<int:user_id>', methods=['GET'])
@@ -237,6 +227,7 @@ def get_user_preference(user_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
+
 #Set user auto-response preference
 @app.route('/update_user_preference/<int:user_id>', methods=['POST'])
 def update_user_preference(user_id):
@@ -253,7 +244,6 @@ def update_user_preference(user_id):
 
         new_preference = data['preference']
 
-        # Assuming your User model has a valid set of preferences
         if new_preference not in ["enabled", "disabled"]:
             return jsonify({'error': 'Invalid preference value'}), 400
 
@@ -264,6 +254,7 @@ def update_user_preference(user_id):
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():

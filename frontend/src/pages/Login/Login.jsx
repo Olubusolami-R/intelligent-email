@@ -23,8 +23,6 @@ export const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Make the API call to your Flask backend with email and password
-    console.log(email,password)
-    console.log("How farrrrr")
     fetch("/login", {
       method: "POST",
       headers: {

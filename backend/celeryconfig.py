@@ -1,5 +1,4 @@
 from celery.schedules import crontab
-# from tasks import print_hello
 
 CELERY_IMPORTS = ('tasks')
 CELERY_TASK_RESULT_EXPIRES = 30

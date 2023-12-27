@@ -1,11 +1,10 @@
 from email.mime.text import MIMEText
-import imaplib,os
+import imaplib
 import smtplib
 from app import celery, send_auto_response
 import email
 from celery.utils.log import get_task_logger
 from models import db,Email,EmailThread,Recipient,User
-from flask import jsonify
 from details import get_details
 
 logger = get_task_logger(__name__)
@@ -104,7 +103,7 @@ def poll_inbox():
                     new_email.recipients = recipients
                     db.session.commit()
 
-                    #Send auto-response (GPT model is to be called here)
+                    #Send auto-response (Fine-tuned GPT model is to be called here)
                     if user_preference == "enabled":
                         auto_response = "By auto-responder: Thank you for your email!"
                         send_auto_response(m['sender'], m['subject'], auto_response)
