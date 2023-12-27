@@ -56,7 +56,9 @@ npm install //run this only once to install the dependencies
 npm start  //to run the project at any time
 ```
 
-Your project should be up and running and looking like ![picture](working_proj.png)
+Your project should be up and running and looking like 
+
+![picture](working_proj.png)
 
 Feel free to tweak, experiment and reach out for a collab!!
 
