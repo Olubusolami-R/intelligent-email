@@ -11,6 +11,7 @@ from sqlalchemy import desc
 from celery import Celery
 from email.mime.text import MIMEText
 import celeryconfig
+from details import get_details
 
 #Set up Flask app
 app = Flask(__name__)
@@ -21,10 +22,6 @@ setup_db(app)
 #Initialize extensions
 moment = Moment(app)
 migrate=Migrate(app,db)
-
-#Get outlook login details from environment variables
-username=os.environ.get('USERNAME')
-password=os.environ.get('PASSWORD')
 
 #Define and initialize celery
 def make_celery(app):
@@ -91,9 +88,8 @@ def send_auto_response(recipient, subject, message):
     # Configure the SMTP server
     smtp_host = "smtp.office365.com"
     smtp_port = 587
-    smtp_username = username
-    smtp_password = password
-
+    smtp_username = get_details()[0]
+    smtp_password = get_details()[1]
     # Create the email message
     msg = MIMEText(message)
     msg['Subject'] = f"Re: {subject}"
@@ -146,6 +142,7 @@ def login():
         if user and user.password ==pword:
             print("Correct password")
             return jsonify({'message': 'Login successful','user_id':user.id}), 200
+            
         else:
             return jsonify({'message': 'Invalid credentials'}), 401
         
