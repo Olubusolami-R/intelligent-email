@@ -1,0 +1,424 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.5 (Homebrew)
+-- Dumped by pg_dump version 15.5 (Homebrew)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
+
+
+ALTER TABLE public.alembic_version OWNER TO olubusolamisogunle;
+
+--
+-- Name: email_threads; Type: TABLE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE TABLE public.email_threads (
+    id integer NOT NULL,
+    user_id integer
+);
+
+
+ALTER TABLE public.email_threads OWNER TO olubusolamisogunle;
+
+--
+-- Name: email_threads_id_seq; Type: SEQUENCE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE SEQUENCE public.email_threads_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.email_threads_id_seq OWNER TO olubusolamisogunle;
+
+--
+-- Name: email_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER SEQUENCE public.email_threads_id_seq OWNED BY public.email_threads.id;
+
+
+--
+-- Name: emails; Type: TABLE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE TABLE public.emails (
+    id integer NOT NULL,
+    server_id character varying(255),
+    subject character varying(255),
+    content text,
+    sender character varying(255),
+    thread_id integer,
+    date timestamp without time zone,
+    preview character varying(255),
+    unread boolean
+);
+
+
+ALTER TABLE public.emails OWNER TO olubusolamisogunle;
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE SEQUENCE public.emails_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.emails_id_seq OWNER TO olubusolamisogunle;
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER SEQUENCE public.emails_id_seq OWNED BY public.emails.id;
+
+
+--
+-- Name: recipients; Type: TABLE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE TABLE public.recipients (
+    id integer NOT NULL,
+    email_id integer,
+    recipient character varying(255)
+);
+
+
+ALTER TABLE public.recipients OWNER TO olubusolamisogunle;
+
+--
+-- Name: recipients_id_seq; Type: SEQUENCE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE SEQUENCE public.recipients_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.recipients_id_seq OWNER TO olubusolamisogunle;
+
+--
+-- Name: recipients_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER SEQUENCE public.recipients_id_seq OWNED BY public.recipients.id;
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE TABLE public.users (
+    id integer NOT NULL,
+    email character varying,
+    password character varying,
+    preference character varying
+);
+
+
+ALTER TABLE public.users OWNER TO olubusolamisogunle;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: olubusolamisogunle
+--
+
+CREATE SEQUENCE public.users_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO olubusolamisogunle;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
+
+
+--
+-- Name: email_threads id; Type: DEFAULT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.email_threads ALTER COLUMN id SET DEFAULT nextval('public.email_threads_id_seq'::regclass);
+
+
+--
+-- Name: emails id; Type: DEFAULT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.emails ALTER COLUMN id SET DEFAULT nextval('public.emails_id_seq'::regclass);
+
+
+--
+-- Name: recipients id; Type: DEFAULT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.recipients ALTER COLUMN id SET DEFAULT nextval('public.recipients_id_seq'::regclass);
+
+
+--
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Data for Name: alembic_version; Type: TABLE DATA; Schema: public; Owner: olubusolamisogunle
+--
+
+COPY public.alembic_version (version_num) FROM stdin;
+b699caf86599
+\.
+
+
+--
+-- Data for Name: email_threads; Type: TABLE DATA; Schema: public; Owner: olubusolamisogunle
+--
+
+COPY public.email_threads (id, user_id) FROM stdin;
+1	1
+2	1
+3	1
+4	1
+5	1
+6	1
+7	1
+8	1
+9	1
+10	1
+11	1
+12	1
+13	1
+14	1
+20	7
+22	8
+24	8
+25	1
+26	1
+27	1
+28	1
+30	1
+31	1
+32	1
+33	1
+\.
+
+
+--
+-- Data for Name: emails; Type: TABLE DATA; Schema: public; Owner: olubusolamisogunle
+--
+
+COPY public.emails (id, server_id, subject, content, sender, thread_id, date, preview, unread) FROM stdin;
+1	24	TEST EMAIL 1	H	Olubusolami Sogunle <busolasogunle@gmail.com>	1	2022-12-30 17:52:39	H	t
+2	26	TEST EMAIL 2	H	Olubusolami Sogunle <busolasogunle@gmail.com>	2	2022-12-30 17:53:11	H	t
+3	28	test poll	Content-Type: text/plain; charset="UTF-8"\n\nhi polling\n	Olubusolami Sogunle <busolasogunle@gmail.com>	3	2022-12-30 19:58:45	hi polling\n	t
+4	30	Hold!	Content-Type: text/plain; charset="UTF-8"\n\nSegun in the building!\n	Segun Sogunle <sfsogunle@gmail.com>	4	2022-12-30 20:02:59	Segun in the building!\n	t
+5	35	First message in 2023	Content-Type: text/plain; charset="UTF-8"\n\nHappy new year baby girl. It's your solid year.\n	Busola dev <busoladev@gmail.com>	5	2023-01-01 23:25:18	Happy new year baby girl. It's your solid year.\n	t
+7	39	Hi girl	H	Olubusolami Sogunle <busolasogunle@gmail.com>	7	2023-01-02 00:00:57	H	t
+8	41	Test rose	H	Rosemary Sogunle <rosemarysogunle@gmail.com>	8	2023-01-02 00:07:13	H	t
+14	94	test26th	Content-Type: text/plain; charset="UTF-8"\n\nbusbus\n	Olubusolami Sogunle <busolasogunle@gmail.com>	14	2023-05-26 15:51:26	busbus\n	f
+13	90	testdev	Content-Type: text/plain; charset="UTF-8"\n\ntest\n	Olubusolami Sogunle <busolasogunle@gmail.com>	13	2023-05-25 17:24:26	test\n	f
+16	10	Howdy	T	Olubusolami Sogunle <busolasogunle@gmail.com>	24	2023-12-26 20:57:53	T	t
+12	88	How far?	Content-Type: text/plain; charset="UTF-8"\n\nHow far?\n	Olubusolami Sogunle <busolasogunle@gmail.com>	12	2023-05-25 17:17:23	How far?\n	f
+11	47	Bawo ni 2023	A	Olubusolami Sogunle <olubusolami.sogunle@stu.cu.edu.ng>	11	2023-01-02 00:34:23	A	f
+10	45	Bawo ni	B	Olubusolami Sogunle <olubusolami.sogunle@stu.cu.edu.ng>	10	2023-01-02 00:32:23	B	f
+9	43	Young lady	H	Rosemary Sogunle <rosemarysogunle@gmail.com>	9	2023-01-02 00:30:48	H	f
+6	37	Testing 2023 number 2	Content-Type: text/plain; charset="UTF-8"\n\nHi, my love. You're going to have a great year.\n	Olubusolami Sogunle <busolasogunle@gmail.com>	6	2023-01-01 23:34:53	Hi, my love. You're going to have a great year.\n	f
+21	0	Re: Agueroooooo	Thank you for your email!	busoladev@outlook.com	27	2023-12-27 01:28:32	Thank you for your email!	f
+20	272	Agueroooooo	E dey sweet me cheee\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	27	2023-12-27 01:28:32	E dey sweet me cheee\r\n	f
+18	270	Test celery	Please, I take God beg you\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	26	2023-12-27 01:24:38	Please, I take God beg you\r\n	f
+19	0	Re: Test celery	Thank you for your email!	busoladev@outlook.com	26	2023-12-27 01:24:38	Thank you for your email!	f
+17	268	Testcelery	Hello sir,\r\n\r\nI hope this email meets you well. I am writing to request a form =\r\noverload for the upcoming semester. I believe I can handle the extra =\r\nworkload and would appreciate your consideration. Thank you.\r\n\r\nBest regards,\r\nRosemary Sogunle.\r\n\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	25	2023-12-27 00:57:28	Hello sir,\r\n\r\nI hope this email meets you well. I am writing to request a form =\r\noverload for the upcoming semester. I believe I can handle the extra =\r\nworkload and would appreciate your consideration. Thank you.\r\n\r\nBest regards,\r\nRosemary Sogunle.\r\n\r\n	f
+22	274	One more test before putting option	What=E2=80=99s up my gee? Testing my auto-response=\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	28	2023-12-27 02:05:37	What=E2=80=99s up my gee? Testing my auto-response=\r\n	f
+23	0	Re: One more test before putting option	By auto-responder: Thank you for your email!	busoladev@outlook.com	28	2023-12-27 02:05:37	By auto-responder: Thank you for your email!	f
+24	281	Testing sending based on user preference	Hello,\r\n\r\nThis is me checking if I=E2=80=99ll get an auto-response now that my prefer=\r\nence is enabled.\r\n\r\nCheers.=\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	30	2023-12-27 03:05:51	Hello,\r\n\r\nThis is me checking if I=E2=80=99ll get an auto-response now that my prefer=\r\nence is enabled.\r\n\r\nCheers.=\r\n	t
+25	0	Re: Testing sending based on user preference	By auto-responder: Thank you for your email!	busoladev@outlook.com	30	2023-12-27 03:05:51	By auto-responder: Thank you for your email!	t
+26	283	Testing disabled preference	Now this is me expecting no response cos I=E2=80=99ve disabled the auto-res=\r\nponse.=\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	31	2023-12-27 03:09:39	Now this is me expecting no response cos I=E2=80=99ve disabled the auto-res=\r\nponse.=\r\n	t
+27	0	Re: Testing disabled preference	By auto-responder: Thank you for your email!	busoladev@outlook.com	31	2023-12-27 03:09:39	By auto-responder: Thank you for your email!	t
+28	285	Once again	Now this is me expecting no response cos I=E2=80=99ve disabled the =\r\nauto-response.=\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	32	2023-12-27 03:12:43	Now this is me expecting no response cos I=E2=80=99ve disabled the =\r\nauto-response.=\r\n	t
+29	287	Expecting a response?	Yes I am\r\n	Olubusolami Sogunle <busolasogunle@gmail.com>	33	2023-12-27 03:16:13	Yes I am\r\n	t
+30	0	Re: Expecting a response?	By auto-responder: Thank you for your email!	busoladev@outlook.com	33	2023-12-27 03:16:13	By auto-responder: Thank you for your email!	t
+\.
+
+
+--
+-- Data for Name: recipients; Type: TABLE DATA; Schema: public; Owner: olubusolamisogunle
+--
+
+COPY public.recipients (id, email_id, recipient) FROM stdin;
+1	1	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+2	2	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+3	3	BUSOLADEV@outlook.com
+4	4	busoladev@outlook.com
+5	5	busoladev@outlook.com
+6	6	BUSOLADEV@outlook.com
+7	7	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+8	8	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+9	9	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+10	10	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+11	11	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+12	12	BUSOLADEV@outlook.com
+13	13	BUSOLADEV@outlook.com
+14	14	BUSOLADEV@outlook.com
+15	16	rosemarydev30@outlook.com
+16	17	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+17	18	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+18	20	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+19	22	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+20	24	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+21	26	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+22	28	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+23	29	"BUSOLADEV@outlook.com" <BUSOLADEV@OUTLOOK.COM>
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: olubusolamisogunle
+--
+
+COPY public.users (id, email, password, preference) FROM stdin;
+7	busolasogunle@gmail.com	busola2003	yes
+8	rosemarydev30@outlook.com	aT*a%%_^w3dt%gD	yes
+1	busoladev@outlook.com	Olurose3020	enabled
+\.
+
+
+--
+-- Name: email_threads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: olubusolamisogunle
+--
+
+SELECT pg_catalog.setval('public.email_threads_id_seq', 33, true);
+
+
+--
+-- Name: emails_id_seq; Type: SEQUENCE SET; Schema: public; Owner: olubusolamisogunle
+--
+
+SELECT pg_catalog.setval('public.emails_id_seq', 30, true);
+
+
+--
+-- Name: recipients_id_seq; Type: SEQUENCE SET; Schema: public; Owner: olubusolamisogunle
+--
+
+SELECT pg_catalog.setval('public.recipients_id_seq', 23, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: olubusolamisogunle
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 8, true);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
+
+
+--
+-- Name: email_threads email_threads_pkey; Type: CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.email_threads
+    ADD CONSTRAINT email_threads_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: emails emails_pkey; Type: CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.emails
+    ADD CONSTRAINT emails_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recipients recipients_pkey; Type: CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.recipients
+    ADD CONSTRAINT recipients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: email_threads email_threads_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.email_threads
+    ADD CONSTRAINT email_threads_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: emails emails_thread_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.emails
+    ADD CONSTRAINT emails_thread_id_fkey FOREIGN KEY (thread_id) REFERENCES public.email_threads(id);
+
+
+--
+-- Name: recipients recipients_email_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: olubusolamisogunle
+--
+
+ALTER TABLE ONLY public.recipients
+    ADD CONSTRAINT recipients_email_id_fkey FOREIGN KEY (email_id) REFERENCES public.emails(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
